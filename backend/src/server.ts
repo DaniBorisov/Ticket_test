@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import authRoutes from "./routes/authRoutes";
 import testRoutes from "./routes/testRoutes";
+import ticketRoutes from "./routes/ticketRoutes";
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ app.get("/", (req, res) => {
 
 app.use("/auth", authRoutes);
 app.use("/test", testRoutes);
+app.use("/tickets", ticketRoutes);
 
 const PORT = 5000;
 
