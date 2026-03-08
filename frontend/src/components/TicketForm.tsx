@@ -1,5 +1,6 @@
 import {type  FormEvent, useEffect, useState } from "react";
 import type { Ticket } from "../types";
+import { Button } from "./ui/button";
 
 interface Props {
   onSubmit: (data: {
@@ -33,6 +34,7 @@ const TicketForm = ({
       setTitle(initialTicket.title);
       setDescription(initialTicket.description);
       setDueDate(formatDateForInput(initialTicket.dueDate));
+      setError("");
     } else {
       setTitle("");
       setDescription("");
@@ -51,6 +53,7 @@ const TicketForm = ({
 
     try {
       setLoading(true);
+      setError("");
 
       await onSubmit({
         title,
@@ -61,7 +64,6 @@ const TicketForm = ({
       if (!initialTicket) {
         setTitle("");
         setDescription("");
-        setDueDate("");
       }
     } catch (err) {
       setError("Failed to save ticket.");
@@ -98,18 +100,18 @@ const TicketForm = ({
       {error && <p style={styles.error}>{error}</p>}
 
       <div style={styles.actions}>
-        <button style={styles.button} type="submit" disabled={loading}>
+        <Button type="submit" disabled={loading}>
           {loading ? "Saving..." : submitLabel}
-        </button>
+        </Button>
 
         {initialTicket && onCancelEdit && (
-          <button
+          <Button
+            variant={"secondary"}
             type="button"
-            style={styles.secondaryButton}
             onClick={onCancelEdit}
           >
             Cancel
-          </button>
+          </Button>
         )}
       </div>
     </form>
@@ -118,7 +120,7 @@ const TicketForm = ({
 
 const styles: Record<string, React.CSSProperties> = {
   form: {
-    background: "#ca7676",
+    background: "#ffffff",
     padding: "1rem",
     borderRadius: "12px",
     boxShadow: "0 6px 20px rgba(0,0,0,0.06)",
@@ -146,20 +148,7 @@ const styles: Record<string, React.CSSProperties> = {
     display: "flex",
     gap: "0.75rem",
   },
-  button: {
-    padding: "0.75rem 1rem",
-    border: "none",
-    borderRadius: "8px",
-    cursor: "pointer",
-    background: "#89cc62",
-  },
-  secondaryButton: {
-    padding: "0.75rem 1rem",
-    border: "1px solid #ccc",
-    borderRadius: "8px",
-    cursor: "pointer",
-    background: "#564949",
-  },
+
   error: {
     color: "crimson",
   },

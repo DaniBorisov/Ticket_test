@@ -1,5 +1,6 @@
 import { type FormEvent, useState } from "react";
 import type { Ticket } from "../types";
+import { Button } from "./ui/button";
 
 interface Props {
   ticket: Ticket;
@@ -11,7 +12,7 @@ const CloseTicketForm = ({ ticket, onSubmit, onCancel }: Props) => {
   const [closeComment, setCloseComment] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
+  
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     setError("");
@@ -48,16 +49,19 @@ const CloseTicketForm = ({ ticket, onSubmit, onCancel }: Props) => {
       {error && <p style={styles.error}>{error}</p>}
 
       <div style={styles.actions}>
-        <button style={styles.button} type="submit" disabled={loading}>
+        <Button  
+          variant={"destructive"}
+          type="submit" 
+          disabled={loading}>
           {loading ? "Closing..." : "Close Ticket"}
-        </button>
-        <button
+        </Button>
+        <Button
+          variant={"secondary"}
           type="button"
-          style={styles.secondaryButton}
           onClick={onCancel}
         >
           Cancel
-        </button>
+        </Button>
       </div>
     </form>
   );
@@ -87,19 +91,6 @@ const styles: Record<string, React.CSSProperties> = {
   actions: {
     display: "flex",
     gap: "0.75rem",
-  },
-  button: {
-    padding: "0.75rem 1rem",
-    border: "none",
-    borderRadius: "8px",
-    cursor: "pointer",
-  },
-  secondaryButton: {
-    padding: "0.75rem 1rem",
-    borderRadius: "8px",
-    border: "1px solid #ccc",
-    background: "#fff",
-    cursor: "pointer",
   },
   error: {
     color: "crimson",

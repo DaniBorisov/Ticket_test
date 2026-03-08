@@ -38,26 +38,27 @@ const HandlerDashboard = () => {
   return (
     <div>
       <Navbar />
-
       <div style={styles.page}>
-        <div style={styles.grid}>
+        <div className="flex md:gap-25 gap-5 flex-wrap md:flex-nowrap" >
           <div>
-            {selectedTicket ? (
-              <CloseTicketForm
-                ticket={selectedTicket}
-                onSubmit={handleCloseSubmit}
-                onCancel={() => setSelectedTicket(null)}
-              />
-            ) : (
-              <div style={styles.placeholderCard}>
-                <h3>Close Ticket</h3>
-                <p>Select an open ticket to close it with a comment.</p>
-              </div>
-            )}
+            <div className="flex sticky top-10 flex-col gap-5">
+              {selectedTicket ? (
+                <CloseTicketForm
+                  ticket={selectedTicket}
+                  onSubmit={handleCloseSubmit}
+                  onCancel={() => setSelectedTicket(null)}
+                />
+              ) : (
+                <div style={styles.placeholderCard}>
+                  <h3>Close Ticket</h3>
+                  <p>Select an open ticket to close it with a comment.</p>
+                </div>
+              )}
+            </div>
           </div>
 
-          <div>
-            <h2>All Tickets</h2>
+          <div className="flex-col grow max-w-3/4 place-self-auto">
+            <h2 className="mb-5">All Tickets</h2>
             {message && <div style={styles.message}>{message}</div>}
 
             {loading ? (
@@ -82,15 +83,8 @@ const HandlerDashboard = () => {
 const styles: Record<string, React.CSSProperties> = {
   page: {
     padding: "1.5rem",
-    background: "#e3b3b3",
+    background: "#ffffff",
     minHeight: "calc(100vh - 70px)",
-    color: "white",
-  },
-  grid: {
-    display: "grid",
-    gridTemplateColumns: "minmax(320px, 380px) 1fr",
-    gap: "1.5rem",
-    alignItems: "start",
   },
   placeholderCard: {
     background: "#fff",
@@ -98,6 +92,7 @@ const styles: Record<string, React.CSSProperties> = {
     borderRadius: "12px",
     boxShadow: "0 6px 20px rgba(0,0,0,0.06)",
     color: "black",
+    width: "260px"
   },
   message: {
     marginBottom: "1rem",

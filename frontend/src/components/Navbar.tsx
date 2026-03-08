@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { Button } from "./ui/button";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -20,9 +21,9 @@ const Navbar = () => {
         <span>
           {user?.email} ({user?.role})
         </span>
-        <button style={styles.button} onClick={handleLogout}>
+        <Button variant={"secondary"} onClick={handleLogout}>
           Logout
-        </button>
+        </Button>
       </div>
     </div>
   );
@@ -34,19 +35,13 @@ const styles: Record<string, React.CSSProperties> = {
     justifyContent: "space-between",
     alignItems: "center",
     padding: "1rem 1.5rem",
-    borderBottom: "1px solid #9b7070",
-    background: "#657dd2",
+    background: "#000000",
+    color:"white"
   },
   right: {
     display: "flex",
     alignItems: "center",
     gap: "1rem",
-  },
-  button: {
-    padding: "0.5rem 0.9rem",
-    borderRadius: "8px",
-    border: "1px solid #ccc",
-    cursor: "pointer",
   },
 };
 

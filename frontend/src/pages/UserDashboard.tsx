@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import TicketForm from "../components/TicketForm";
 import TicketList from "../components/TicketList";
 import type { Ticket } from "../types";
+
 import {
   createTicket,
   getMyTickets,
@@ -46,7 +47,6 @@ const UserDashboard = () => {
     dueDate: string;
   }) => {
     if (!editingTicket) return;
-
     await updateMyTicket(editingTicket.id, data);
     setMessage("Ticket updated successfully.");
     setEditingTicket(null);
@@ -58,24 +58,27 @@ const UserDashboard = () => {
       <Navbar />
 
       <div style={styles.page} >
-        <div style={styles.grid} >
+        <div className=" flex md:gap-25 gap-5 flex-wrap md:flex-nowrap ">
           <div>
+            <div className="flex sticky top-10 flex-col gap-5">
             <TicketForm
               onSubmit={editingTicket ? handleUpdateTicket : handleCreateTicket}
               initialTicket={editingTicket}
               submitLabel={editingTicket ? "Update Ticket" : "Create Ticket"}
               onCancelEdit={() => setEditingTicket(null)}
             />
-          </div>
 
-          <div>
-            <h2>My Tickets</h2>
             {message && <div style={styles.message}>{message}</div>}
-
+            </div>
+          </div>
+          <div className="flex-col grow max-w-3/4 place-self-auto">
+          <div className="mb-5"> 
+            <h2>My Tickets</h2>
+          </div>
             {loading ? (
               <p>Loading tickets...</p>
             ) : (
-              <TicketList
+              <TicketList 
                 tickets={tickets}
                 mode="USER"
                 onEdit={(ticket) => {
@@ -84,26 +87,21 @@ const UserDashboard = () => {
                 }}
               />
             )}
+            </div>
           </div>
         </div>
       </div>
-    </div>
   );
 };
 
 const styles: Record<string, React.CSSProperties> = {
   page: {
-    padding: "1.5rem",
-    background: "#e3b3b3",
+    padding: "2rem",
+    paddingLeft: "3rem",
+    background: "#ffffff",
     minHeight: "calc(100vh - 70px)",
   },
-    grid: {
-    display: "grid",
-    gridTemplateColumns: "minmax(320px, 380px) 1fr",
-    gap: "1.5rem",
-    alignItems: "start",
-    },
-    message: {
+  message: {
     marginBottom: "1rem",
     padding: "0.75rem 1rem",
     borderRadius: "8px",
