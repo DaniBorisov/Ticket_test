@@ -9,7 +9,7 @@
     "start": "node dist/server.js"
   },
   "prisma": {
-  "seed": "npx prisma generate && ts-node prisma/seed.ts"
+    "seed": "npx prisma generate && ts-node prisma/seed.ts"
   },
   "keywords": [],
   "author": "",

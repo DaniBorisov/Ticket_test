@@ -15,12 +15,14 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   backend:
-    build: ./backend
+    build: 
+      context: ./backend
     container_name: ticket_backend
     depends_on:
       - postgres
     environment:
       DATABASE_URL: postgresql://postgres:postgres@postgres:5432/ticketdb
+      JWT_SECRET: supersecret
     ports:
       - "5000:5000"
 
