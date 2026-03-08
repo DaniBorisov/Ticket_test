@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect,useMemo, useState } from "react";
 import Navbar from "../components/Navbar";
 import TicketForm from "../components/TicketForm";
 import TicketList from "../components/TicketList";
@@ -10,11 +10,14 @@ import {
   updateMyTicket,
 } from "../services/ticketService";
 
+type FilterStatus = "ALL" | "OPEN" | "CLOSED";
+
 const UserDashboard = () => {
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [editingTicket, setEditingTicket] = useState<Ticket | null>(null);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
+  const [filter, setFilter] = useState<FilterStatus>("ALL");
 
   const loadTickets = async () => {
     try {
@@ -30,6 +33,11 @@ const UserDashboard = () => {
   useEffect(() => {
     loadTickets();
   }, []);
+
+    const filteredTickets = useMemo(() => {
+    if (filter === "ALL") return tickets;
+    return tickets.filter((ticket) => ticket.status === filter);
+  }, [tickets, filter]);
 
   const handleCreateTicket = async (data: {
     title: string;
@@ -75,11 +83,25 @@ const UserDashboard = () => {
           <div className="mb-5"> 
             <h2>My Tickets</h2>
           </div>
+
+          <div>
+              <label htmlFor="user-status-filter">Filter by status:</label>
+              <select
+                id="user-status-filter"
+                value={filter}
+                onChange={(e) => setFilter(e.target.value as FilterStatus)}
+              >
+                <option value="ALL">All</option>
+                <option value="OPEN">Open</option>
+                <option value="CLOSED">Closed</option>
+              </select>
+            </div>
+
             {loading ? (
               <p>Loading tickets...</p>
             ) : (
               <TicketList 
-                tickets={tickets}
+                tickets={filteredTickets}
                 mode="USER"
                 onEdit={(ticket) => {
                   setMessage("");

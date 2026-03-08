@@ -1,15 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Navbar from "../components/Navbar";
 import TicketList from "../components/TicketList";
 import type { Ticket } from "../types";
 import { closeTicket, getAllTickets } from "../services/ticketService";
 import CloseTicketForm from "../components/CloseTicketForm";
 
+type FilterStatus = "ALL" | "OPEN" | "CLOSED";
+
 const HandlerDashboard = () => {
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
   const [message, setMessage] = useState("");
+  const [filter, setFilter] = useState<FilterStatus>("ALL");
 
   const loadTickets = async () => {
     try {
@@ -21,6 +24,11 @@ const HandlerDashboard = () => {
       setLoading(false);
     }
   };
+
+  const filteredTickets = useMemo(() => {
+    if (filter === "ALL") return tickets;
+    return tickets.filter((ticket) => ticket.status === filter);
+  }, [tickets, filter]);
 
   useEffect(() => {
     loadTickets();
@@ -61,11 +69,25 @@ const HandlerDashboard = () => {
             <h2 className="mb-5">All Tickets</h2>
             {message && <div style={styles.message}>{message}</div>}
 
+
+            <div className="flex pb-2 pl-1">
+              <label htmlFor="user-status-filter">Filter by status:</label>
+              <select
+                id="user-status-filter"
+                value={filter}
+                onChange={(e) => setFilter(e.target.value as FilterStatus)}
+              >
+                <option value="ALL">All</option>
+                <option value="OPEN">Open</option>
+                <option value="CLOSED">Closed</option>
+              </select>
+            </div>
+
             {loading ? (
               <p>Loading tickets...</p>
             ) : (
               <TicketList
-                tickets={tickets}
+                tickets={filteredTickets}
                 mode="HANDLER"
                 onClose={(ticket) => {
                   setMessage("");
