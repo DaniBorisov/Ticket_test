@@ -15,7 +15,8 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   backend:
-    build: ./backend
+    build: 
+      context: ./backend
     container_name: ticket_backend
     depends_on:
       - postgres

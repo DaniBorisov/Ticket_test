@@ -36,7 +36,7 @@ const styles: Record<string, React.CSSProperties> = {
     alignItems: "center",
     padding: "1rem 1.5rem",
     background: "#000000",
-    color:"white"
+    color: "white"
   },
   right: {
     display: "flex",

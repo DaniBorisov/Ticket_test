@@ -12,7 +12,7 @@ const CloseTicketForm = ({ ticket, onSubmit, onCancel }: Props) => {
   const [closeComment, setCloseComment] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  
+
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     setError("");
@@ -49,9 +49,9 @@ const CloseTicketForm = ({ ticket, onSubmit, onCancel }: Props) => {
       {error && <p style={styles.error}>{error}</p>}
 
       <div style={styles.actions}>
-        <Button  
+        <Button
           variant={"destructive"}
-          type="submit" 
+          type="submit"
           disabled={loading}>
           {loading ? "Closing..." : "Close Ticket"}
         </Button>
