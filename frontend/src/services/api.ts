@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "https://redesigned-disco-5v555xv994q24xrv-5000.app.github.dev/",
 });
 
 api.interceptors.request.use((config) => {
