@@ -15,7 +15,7 @@ From project root
 docker compose up -- build
 ```
 
-backend API will run on [http://localhost:5000]
+backend API will run on { http://localhost:5000 }
 
 ### Start FrontEnd
 Navigate to frontend folder
@@ -24,7 +24,7 @@ npm install
 npm run dev 
 ```
 
-frontend will run on [http://localhost:5173]
+frontend will run on { http://localhost:5173 }
 
 There are two predifined test accounts, vissible on the log in page.
 
